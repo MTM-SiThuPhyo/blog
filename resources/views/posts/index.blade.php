@@ -5,9 +5,15 @@
 <ul>
     @foreach($posts as $post)
     <li>
-        <a href="/posts/show/{{ $post->id }}">{{ $post->title }}</a>
-        [<a href="/posts/edit/{{ $post->id }}">Edit</a>]
-        [<a href="/posts/delete/{{ $post->id }}">Delete</a>]
+        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+        [<a href="/posts/{{ $post->id }}/edit">Edit</a>]
+        <form action="/posts/{{ $post->id }}"
+            method="POST"
+            onsubmit="return confirm('Are you sure to delete Post')">
+            @method('DELETE')
+            @csrf
+            <button>Delete</button>
+        </form>
     </li>
     @endforeach
 </ul>
