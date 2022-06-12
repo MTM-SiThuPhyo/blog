@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -20,14 +22,16 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required',
-            'body'  => 'required|min:5'
-        ], [
-            'title.required' => 'ခေါင်းစဉ်ထည့်ပါ။',
-            'body.required' => 'အ‌ကြောင်းအရာထည့်ပါ။',
-            'body.min'  => 'အနည်းဆုံး၅လုံးထည့်ပါ။'
+            'body'  => 'required'
         ]);
+
+        if ($validator->fails()) {
+            return redirect('/posts/create')
+            ->withErrors($validator)
+            ->withInput();
+        }
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
@@ -44,16 +48,8 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'body'  => 'required|min:5'
-        ], [
-            'title.required' => 'ခေါင်းစဉ်ထည့်ပါ။',
-            'body.required' => 'အ‌ကြောင်းအရာထည့်ပါ။',
-            'body.min'  => 'အနည်းဆုံး၅လုံးထည့်ပါ။'
-        ]);
         $post = Post::find($id);
         $post->title = $request->title;
         $post->body = $request->body;

@@ -11,14 +11,14 @@
     @csrf
 
     <label>Post Title</label>
-    <input type="text" name="title">
+    <input type="text" name="title" value="{{ old('title') }}">
     @error('title')
         <div style="color: red">{{ $message }}</div>
     @endError
     <br><br>
 
     <label>Post Body</label>
-    <textarea name="body"></textarea>
+    <textarea name="body">{{ old('body') }}</textarea>
     @error('body')
         <div style="color: red">{{ $message }}</div>
     @endError
