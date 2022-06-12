@@ -39,7 +39,8 @@ class PostController extends Controller
     public function update($id)
     {
         $post = Post::find($id);
-        $post->title = "Changed Title";
+        $post->title = request('title');
+        $post->body = request('body');
         $post->updated_at = now();
         $post->save();
 
