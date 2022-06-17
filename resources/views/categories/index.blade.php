@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Full Stack</title>
+    <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -32,38 +32,28 @@
     </nav>
 
     <div class="container mt-5">
-
-        <div class="card">
-            <div class="card-header">
-                <h3>Create A Post</h3>
-            </div>
-            <div class="card-body">
-                <form action="/posts" method="POST">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label class="form-label">Post Title</label>
-                        <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" value="{{ old('title') }}">
-                        @error('title')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Post Body</label>
-                        <textarea class="form-control  @error('body') is-invalid @enderror" name="body" rows="5">{{ old('body') }}</textarea>
-                        @error('body')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-outline-primary">Create</button>
-                        <a href="/posts" class="btn btn-outline-secondary">Back</a>
-                    </div>
-                </form>
-            </div>
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-success" href="/categories/create">Create A Category</a>
         </div>
+        @foreach ($categories as $category)
+            <div>
+                <h3><a href="/categories/{{ $category->id }}">{{ $category->name }}</a></h3>
+                January 1, 2021 by Mark
+                <div class="d-flex justify-content-end">
+                    <a href="/categories/{{ $category->id }}/edit/" class="btn btn-outline-success">Edit</a>
+                    <form action="/categories/{{ $category->id }}"
+                        method="POST"
+                        onsubmit="return confirm('Are you sure to delete?')">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger ms-2">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr>
+        @endforeach
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel Full Stack</title>
+    <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -30,38 +30,14 @@
             </div>
         </div>
     </nav>
-
-    <div class="container mt-5">
-
+    <div class="container">
         <div class="card">
             <div class="card-header">
-                <h3>Create A Post</h3>
+                <h3>Category Detail</h3>
             </div>
             <div class="card-body">
-                <form action="/posts" method="POST">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label class="form-label">Post Title</label>
-                        <input class="form-control @error('title') is-invalid @enderror" type="text" name="title" value="{{ old('title') }}">
-                        @error('title')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Post Body</label>
-                        <textarea class="form-control  @error('body') is-invalid @enderror" name="body" rows="5">{{ old('body') }}</textarea>
-                        @error('body')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-outline-primary">Create</button>
-                        <a href="/posts" class="btn btn-outline-secondary">Back</a>
-                    </div>
-                </form>
+                <h3>{{ $category->name }}</h3>
+                <a href="/categories" class="btn btn-outline-secondary">Back</a>
             </div>
         </div>
     </div>

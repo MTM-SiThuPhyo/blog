@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Laravel Full Stack</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -24,29 +24,17 @@
                         <a class="nav-link active" aria-current="page" href="/posts">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/posts/create">Create A Post</a>
+                        <a class="nav-link" href="/categories">Category List</a>
                     </li>
-                    {{-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li> --}}
                 </ul>
             </div>
         </div>
     </nav>
 
     <div class="container mt-5">
-
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-success" href="/posts/create">Create A Post</a>
+        </div>
         @foreach ($posts as $post)
             <div>
                 <h3><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h3>
@@ -58,7 +46,6 @@
                         method="POST"
                         onsubmit="return confirm('Are you sure to delete?')">
                         @method('DELETE')
-                        {{-- <input type="hidden" name="_method" value="DELETE"> --}}
                         @csrf
                         <button type="submit" class="btn btn-outline-danger ms-2">Delete</button>
                     </form>
