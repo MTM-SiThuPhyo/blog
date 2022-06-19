@@ -7,6 +7,12 @@
     <div class="d-flex justify-content-end">
         <a class="btn btn-success" href="/posts/create">Create A Post</a>
     </div>
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     @foreach ($posts as $post)
         <div>
             <h3><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h3>

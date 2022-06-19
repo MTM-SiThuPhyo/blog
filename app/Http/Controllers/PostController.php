@@ -26,7 +26,8 @@ class PostController extends Controller
         $post->created_at = now();
         $post->updated_at = now();
         $post->save();
-        return redirect('/posts');
+        // session()->flash('success', 'A post was created successfully');
+        return redirect('/posts')->with('success', 'A post was created successfully');
     }
 
     public function edit($id)
@@ -43,8 +44,8 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->updated_at = now();
         $post->save();
-
-        return redirect('/posts');
+        // session()->flash('success', 'A post was updated successfully');
+        return redirect('/posts')->with('success', 'A post was updated successfully');
     }
 
     public function show($id)
@@ -58,6 +59,6 @@ class PostController extends Controller
     {
         Post::destroy($id);
 
-        return redirect('/posts');
+        return redirect('/posts')->with('success', 'A post was deleted successfully');
     }
 }

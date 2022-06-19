@@ -14,23 +14,23 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" placeholder="Si Thu Phyo" value="{{ old('name') }}">
+                            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Si Thu Phyo" value="{{ old('name') }}">
                             @error('name')
-                                <span class="text-danger">{{ $message }}</span>
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" placeholder="sithuphyo@gmail.com" value="{{ old('email') }}">
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="sithuphyo@gmail.com" value="{{ old('email') }}">
                             @error('email')
-                                <span class="text-danger">{{ $message }}</span>
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter your Password" value="{{ old('password') }}">
+                            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your Password" value="{{ old('password') }}">
                             @error('password')
-                                <span class="text-danger">{{ $message }}</span>
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
