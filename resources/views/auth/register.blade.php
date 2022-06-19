@@ -27,13 +27,16 @@
                             @enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Name</label>
+                            <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Enter your Password" value="{{ old('password') }}">
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" name="password_confirmation" class="form-control">
+                        </div>
                         <button type="submit" class="btn btn-outline-primary">Register</button>
                     </form>
                 </div>

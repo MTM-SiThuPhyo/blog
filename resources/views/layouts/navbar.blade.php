@@ -21,7 +21,10 @@
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <li><button class="dropdown-item" type="submit">Logout</button></li>
+                    </form>
                     </ul>
                 </li>
                 @else
