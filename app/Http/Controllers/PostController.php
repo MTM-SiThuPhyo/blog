@@ -20,12 +20,21 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        $post = new Post();
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->created_at = now();
-        $post->updated_at = now();
-        $post->save();
+        // $post = new Post();
+        // $post->title = $request->title;
+        // $post->body = $request->body;
+        // $post->created_at = now();
+        // $post->updated_at = now();
+        // $post->save();
+
+        // Post::create([
+        //     'title' => $request->title,
+        //     'body'  => $request->body
+        // ]);
+
+        Post::create($request->only(['title', 'body']));
+
+        // Post::create($request->except(['_token']));
         // session()->flash('success', 'A post was created successfully');
         return redirect('/posts')->with('success', 'A post was created successfully');
     }
@@ -40,10 +49,17 @@ class PostController extends Controller
     public function update(PostRequest $request, $id)
     {
         $post = Post::find($id);
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->updated_at = now();
-        $post->save();
+        // $post->title = $request->title;
+        // $post->body = $request->body;
+        // $post->updated_at = now();
+        // $post->save();
+
+        // $post->update([
+        //     'title' => $request->title,
+        //     'body'  => $request->body
+        // ]);
+
+        $post->update($request->only(['title', 'body']));
         // session()->flash('success', 'A post was updated successfully');
         return redirect('/posts')->with('success', 'A post was updated successfully');
     }

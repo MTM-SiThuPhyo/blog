@@ -4,9 +4,11 @@
 
 @section('content')
 
+    @auth
     <div class="d-flex justify-content-end">
         <a class="btn btn-success" href="/posts/create">Create A Post</a>
     </div>
+    @endauth
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -16,8 +18,10 @@
     @foreach ($posts as $post)
         <div>
             <h3><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h3>
-            January 1, 2021 by Mark
+            <!-- {{ $post->created_at->format('M d, Y') }} by Mark -->
+            {{ $post->created_at->diffforHumans()}} by Mark
             <p>{{ $post->body }}</p>
+            @auth
             <div class="d-flex justify-content-end">
                 <a href="/posts/{{ $post->id }}/edit/" class="btn btn-outline-success">Edit</a>
                 <form action="/posts/{{ $post->id }}"
@@ -28,6 +32,7 @@
                     <button type="submit" class="btn btn-outline-danger ms-2">Delete</button>
                 </form>
             </div>
+            @endauth
         </div>
 
         <hr>

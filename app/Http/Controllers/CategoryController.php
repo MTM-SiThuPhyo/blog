@@ -20,11 +20,15 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $category = new Category();
-        $category->name = $request->name;
-        $category->created_at = now();
-        $category->updated_at = now();
-        $category->save();
+        // $category = new Category();
+        // $category->name = $request->name;
+        // $category->created_at = now();
+        // $category->updated_at = now();
+        // $category->save();
+
+        Category::create([
+            'name' => $request->name,
+        ]);
         return redirect('/categories');
     }
 
@@ -38,9 +42,12 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         $category = Category::find($id);
-        $category->name = $request->name;
-        $category->updated_at = now();
-        $category->save();
+        // $category->name = $request->name;
+        // $category->updated_at = now();
+        // $category->save();
+        $category->update([
+            'name' => $request->name
+        ]);
 
         return redirect('/categories');
     }
