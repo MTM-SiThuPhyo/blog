@@ -19,7 +19,7 @@
         <div>
             <h3><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h3>
             <!-- {{ $post->created_at->format('M d, Y') }} by Mark -->
-            {{ $post->created_at->diffforHumans()}} by Mark
+            <i>{{ $post->created_at->diffForHumans() }}</i> by {{ $post->author_name }}
             <p>{{ $post->body }}</p>
             @auth
             <div class="d-flex justify-content-end">
@@ -38,4 +38,5 @@
         <hr>
     @endforeach
 
+    {{ $posts->links() }}
 @endsection  

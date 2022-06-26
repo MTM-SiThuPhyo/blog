@@ -9,7 +9,10 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::select('posts.*', 'users.name as author_name')
+                ->join('users', 'posts.user_id', 'users.id')
+                ->paginate(5);
+
         return view('posts.index', compact('posts'));
     }
 
@@ -66,7 +69,10 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::find($id);
+        $post = Post::select('posts.*', 'users.name as author_name')
+                    ->join('users', 'posts.user_id', 'users.id')
+                    ->where('posts.id', $id)
+                    ->first();
 
         return view('posts.show', compact('post'));
     }
