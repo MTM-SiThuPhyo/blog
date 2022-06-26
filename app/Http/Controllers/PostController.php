@@ -9,8 +9,9 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::select('posts.*', 'users.name as author_name')
+        $posts = Post::select('posts.*', 'users.name as author')
                 ->join('users', 'posts.user_id', 'users.id')
+                ->orderBy('id', 'desc')
                 ->paginate(5);
 
         return view('posts.index', compact('posts'));
@@ -30,12 +31,13 @@ class PostController extends Controller
         // $post->updated_at = now();
         // $post->save();
 
-        // Post::create([
-        //     'title' => $request->title,
-        //     'body'  => $request->body
-        // ]);
+        Post::create([
+            'title' => $request->title,
+            'body'  => $request->body,
+            'user_id'   => auth()->id(),
+        ]);
 
-        Post::create($request->only(['title', 'body']));
+        // Post::create($request->only(['title', 'body']));
 
         // Post::create($request->except(['_token']));
         // session()->flash('success', 'A post was created successfully');
@@ -69,10 +71,9 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::select('posts.*', 'users.name as author_name')
+        $post = Post::select('posts.*', 'users.name as author')
                     ->join('users', 'posts.user_id', 'users.id')
-                    ->where('posts.id', $id)
-                    ->first();
+                    ->find($id);
 
         return view('posts.show', compact('post'));
     }

@@ -9,7 +9,7 @@
         </div>
         <div class="card-body">
             <h3>{{ $post->title }}</h3>
-            <i>{{ $post->created_at->diffForHumans() }}</i> by {{ $post->author_name }}
+            <p>Post by <b>{{ $post->author }}</b> by <i>{{ $post->created_at->diffForHumans() }}</i></p>
             <p>{{ $post->body }}</p>
             <a href="/posts" class="btn btn-outline-secondary">Back</a>
         </div>

@@ -19,9 +19,9 @@
         <div>
             <h3><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h3>
             <!-- {{ $post->created_at->format('M d, Y') }} by Mark -->
-            <i>{{ $post->created_at->diffForHumans() }}</i> by {{ $post->author_name }}
+            <i>{{ $post->created_at->diffForHumans() }}</i> by {{ $post->author }}
             <p>{{ $post->body }}</p>
-            @auth
+            @if($post->isOwnPost())
             <div class="d-flex justify-content-end">
                 <a href="/posts/{{ $post->id }}/edit/" class="btn btn-outline-success">Edit</a>
                 <form action="/posts/{{ $post->id }}"
@@ -32,7 +32,7 @@
                     <button type="submit" class="btn btn-outline-danger ms-2">Delete</button>
                 </form>
             </div>
-            @endauth
+            @endif
         </div>
 
         <hr>
