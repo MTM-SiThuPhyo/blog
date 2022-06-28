@@ -12,6 +12,9 @@
                     <a class="nav-link active" aria-current="page" href="/posts">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="/my-posts">My Post</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/categories">Category List</a>
                 </li>
                 @if(Auth::check())

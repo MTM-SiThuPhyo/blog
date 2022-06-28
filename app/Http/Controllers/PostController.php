@@ -9,9 +9,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::select('posts.*', 'users.name as author')
-                ->join('users', 'posts.user_id', 'users.id')
-                ->orderBy('id', 'desc')
+        $posts = Post::orderBy('id', 'desc')
                 ->paginate(5);
 
         return view('posts.index', compact('posts'));
