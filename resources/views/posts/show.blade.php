@@ -11,6 +11,11 @@
             <h3>{{ $post->title }}</h3>
             <p>Post by <b>{{ $post->author }}</b> by <i>{{ $post->created_at->diffForHumans() }}</i></p>
             <p>{{ $post->body }}</p>
+            <ul>
+            @foreach ($post->categories as $category)
+                <li>{{ $category->name }}</li>
+            @endforeach
+            </ul>
             <a href="/posts" class="btn btn-outline-secondary">Back</a>
         </div>
     </div>

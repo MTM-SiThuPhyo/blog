@@ -21,6 +21,11 @@
             <!-- {{ $post->created_at->format('M d, Y') }} by Mark -->
             <i>{{ $post->created_at->diffForHumans() }}</i> by {{ $post->user->name }}
             <p>{{ $post->body }}</p>
+            <ul>
+            @foreach ($post->categories as $category)
+                <li>{{ $category->name }}</li>
+            @endforeach
+            </ul>
             @if($post->isOwnPost())
             <div class="d-flex justify-content-end">
                 <a href="/posts/{{ $post->id }}/edit/" class="btn btn-outline-success">Edit</a>

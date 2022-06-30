@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
+use App\Models\CategoryPost;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -11,13 +13,13 @@ class PostController extends Controller
     {
         $posts = Post::orderBy('id', 'desc')
                 ->paginate(5);
-
         return view('posts.index', compact('posts'));
     }
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::get();
+        return view('posts.create', compact('categories'));
     }
 
     public function store(PostRequest $request)
@@ -28,12 +30,17 @@ class PostController extends Controller
         // $post->created_at = now();
         // $post->updated_at = now();
         // $post->save();
-
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
             'body'  => $request->body,
             'user_id'   => auth()->id(),
         ]);
+        foreach($request->category as $category) {
+            CategoryPost::create([
+                'category_id' => $category,
+                'post_id'     => $post->id
+            ]);
+        }
 
         // Post::create($request->only(['title', 'body']));
 
@@ -45,8 +52,8 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-
-        return view('posts.edit', compact('post'));
+        $categories = Category::get();
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     public function update(PostRequest $request, $id)
@@ -57,10 +64,18 @@ class PostController extends Controller
         // $post->updated_at = now();
         // $post->save();
 
-        // $post->update([
-        //     'title' => $request->title,
-        //     'body'  => $request->body
-        // ]);
+        $post->update([
+            'title' => $request->title,
+            'body'  => $request->body
+        ]);
+
+        CategoryPost::where('post_id', $id)->delete();
+        foreach($request->category as $category) {
+            CategoryPost::create([
+                'category_id' => $category,
+                'post_id'     => $id
+            ]);
+        }
 
         $post->update($request->only(['title', 'body']));
         // session()->flash('success', 'A post was updated successfully');

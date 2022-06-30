@@ -28,6 +28,15 @@
                     @enderror
                 </div>
 
+                <div class="input-group mb-3">
+                    <select class="form-select" name="category[]" multiple>
+                        <option selected>Choose...</option>
+                        @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-outline-primary">Create</button>
                     <a href="/posts" class="btn btn-outline-secondary">Back</a>
