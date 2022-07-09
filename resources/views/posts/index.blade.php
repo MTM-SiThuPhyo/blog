@@ -6,7 +6,7 @@
 
     @auth
     <div class="d-flex justify-content-end">
-        <a class="btn btn-success" href="/posts/create">Create A Post</a>
+        <a class="btn btn-success" href="{{ route('posts.create') }}">Create A Post</a>
     </div>
     @endauth
     @if(session('success'))
@@ -17,7 +17,7 @@
     @endif
     @foreach ($posts as $post)
         <div>
-            <h3><a href="/posts/{{ $post->id }}">{{ $post->title }}</a></h3>
+            <h3><a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a></h3>
             <!-- {{ $post->created_at->format('M d, Y') }} by Mark -->
             <i>{{ $post->created_at->diffForHumans() }}</i> by {{ $post->user->name }}
             <p>{{ $post->body }}</p>
@@ -28,8 +28,8 @@
             </ul>
             @if($post->isOwnPost())
             <div class="d-flex justify-content-end">
-                <a href="/posts/{{ $post->id }}/edit/" class="btn btn-outline-success">Edit</a>
-                <form action="/posts/{{ $post->id }}"
+                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-outline-success">Edit</a>
+                <form action="{{ route('posts.destroy', $post->id) }}"
                     method="POST"
                     onsubmit="return confirm('Are you sure to delete?')">
                     @method('DELETE')

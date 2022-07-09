@@ -20,17 +20,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'posts');
 
-Route::get('/posts', [PostController::class, 'index']);
-Route::get('/posts/create', [PostController::class, 'create'])->middleware('myauth');
-Route::post('/posts', [PostController::class, 'store']);
-Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
-Route::put('/posts/{id}', [PostController::class, 'update']);
-Route::get('/posts/{id}', [PostController::class, 'show']);
-Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/create', [PostController::class, 'create'])->middleware('myauth')->name('posts.create');
+Route::post('/posts', [PostController::class, 'store'])->middleware('myauth')->name('posts.store');
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])->middleware('myauth')->name('posts.edit');
+Route::put('/posts/{id}', [PostController::class, 'update'])->middleware('myauth')->name('posts.update');
+Route::get('/posts/{id}', [PostController::class, 'show'])->middleware('myauth')->name('posts.show');
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])->middleware('myauth')->name('posts.destroy');
 
 // Route::resource('posts', PostController::class);
 
-Route::resource('categories', CategoryController::class);
+Route::resource('category', CategoryController::class);
+
+// Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+// Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+// Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+// Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+// Route::put('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
+// Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');
+// Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
 Route::get('register', [RegisterController::class, 'create']);
 Route::post('register', [RegisterController::class, 'store']);

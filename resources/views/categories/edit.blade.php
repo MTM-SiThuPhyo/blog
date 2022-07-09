@@ -8,7 +8,7 @@
             <h3>Edit A Category</h3>
         </div>
         <div class="card-body">
-            <form action="/categories/{{ $category->id }}" method="POST">
+            <form action="{{ route('category.update', $category->id) }}" method="POST">
                 @method('PUT')
                 @csrf
 
@@ -22,7 +22,7 @@
 
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-outline-primary">Update</button>
-                    <a href="/categories" class="btn btn-outline-secondary">Back</a>
+                    <a href="{{ route('category.index') }}" class="btn btn-outline-secondary">Back</a>
                 </div>
             </form>
         </div>

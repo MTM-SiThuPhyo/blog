@@ -15,7 +15,7 @@
                     <a class="nav-link active" href="/my-posts">My Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/categories">Category List</a>
+                    <a class="nav-link" href="{{ route('category.index') }}">Category List</a>
                 </li>
                 @if(Auth::check())
                 <li class="nav-item dropdown">
