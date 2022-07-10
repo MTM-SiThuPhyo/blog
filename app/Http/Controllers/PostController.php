@@ -25,7 +25,16 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        $post = auth()->user()->posts()->create($request->only('title', 'body'));
+        $file = $request->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $dir = public_path('upload/images');
+        $image = '/upload/images/' . $filename;
+        $file->move($dir, $filename);
+        $post = auth()->user()->posts()->create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'image' => $image
+        ]);
 
         $post->categories()->attach($request->category_ids);
 
@@ -43,8 +52,17 @@ class PostController extends Controller
 
     public function update(PostRequest $request, $id)
     {
+        $file = $request->file('image');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $dir = public_path('upload/images');
+        $image = '/upload/images/' . $filename;
+        $file->move($dir, $filename);
         $post = Post::find($id);
-        $post->update($request->only(['title', 'body']));
+        $post->update([
+            'title' => $request->title,
+            'body'  => $request->body,
+            'image' => $image
+        ]);
 
         $post->categories()->sync($request->category_ids);
         return redirect('/posts')->with('success', 'A post was updated successfully.');

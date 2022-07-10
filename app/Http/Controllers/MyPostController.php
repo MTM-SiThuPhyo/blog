@@ -13,9 +13,9 @@ class MyPostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Auth::user()->posts()->orderBy('id', 'desc')->paginate(5);
+        $posts = Auth::user()->posts()->where('title', 'like', '%' . $request->search . '%')->orderBy('id', 'desc')->paginate(3);
         return view('my-posts.index', compact('posts'));
     }
 

@@ -9,9 +9,17 @@
             <h3>Edit A Post</h3>
         </div>
         <div class="card-body">
-            <form action="{{ route('posts.update', $post->id) }}" method="POST">
+            <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
+
+                <div class="mb-3">
+                    <label class="form-label">Post Image</label>
+                    <input class="form-control @error('image') is-invalid @enderror" type="file" name="image">
+                    @error('image')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="mb-3">
                     <label class="form-label">Post Title</label>
