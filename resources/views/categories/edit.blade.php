@@ -10,15 +10,7 @@
         <div class="card-body">
             <form action="{{ route('category.update', $category->id) }}" method="POST">
                 @method('PUT')
-                @csrf
-
-                <div class="mb-3">
-                    <label class="form-label">Category Name</label>
-                    <input class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ $category->name }}">
-                    @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
+                @include('categories._form')
 
                 <div class="d-flex justify-content-between">
                     <button type="submit" class="btn btn-outline-primary">Update</button>
