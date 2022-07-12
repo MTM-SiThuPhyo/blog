@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Si Thu Phyo',
             'email' => 'stp@gmail.com',
-            'password' => bcrypt('123123123')
+            'password' => bcrypt('123123123'),
+            'path'  => 'upload/images/avatar.png'
         ]);
         $this->call(UserSeeder::class);
         $this->call(PostSeeder::class);

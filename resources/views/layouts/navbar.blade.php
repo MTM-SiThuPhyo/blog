@@ -21,11 +21,17 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
+                        @if(Auth::user()->path)
+                        <img src="{{ Storage::url(Auth::user()->path) }}" alt="" style=" width: 30px; margin-right: 10px; ">
+                        @else
+                        <img src="/images/avatar.png" alt="" style=" width: 30px; margin-right: 10px; ">
+                        @endif
                         {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <form action="/logout" method="POST">
                         @csrf
+                        <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
                         <li><button class="dropdown-item" type="submit">Logout</button></li>
                     </form>
                     </ul>
