@@ -6,7 +6,9 @@ use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\CategoryPost;
 use App\Models\Post;
+use App\Models\PostImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -25,16 +27,22 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        $file = $request->file('image');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $dir = public_path('upload/images');
-        $image = '/upload/images/' . $filename;
-        $file->move($dir, $filename);
         $post = auth()->user()->posts()->create([
             'title' => $request->title,
-            'body' => $request->body,
-            'image' => $image
+            'body' => $request->body
         ]);
+
+        // upload multiple image
+        foreach($request->file('images') as $file) {
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $dir = public_path('upload/images');
+            $file->move($dir, $filename);
+
+            PostImage::create([
+                'post_id' => $post->id,
+                'path' => '/upload/images/' . $filename,
+            ]);
+        }
 
         $post->categories()->attach($request->category_ids);
 
@@ -52,16 +60,31 @@ class PostController extends Controller
 
     public function update(PostRequest $request, $id)
     {
-        $file = $request->file('image');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $dir = public_path('upload/images');
-        $image = '/upload/images/' . $filename;
-        $file->move($dir, $filename);
-        $post = Post::find($id);
+        // Get post by id
+        $post = Post::findOrFail($id);
+
+        // delete old image
+        foreach($post->images as $image) {
+            unlink(public_path($image->path));
+            PostImage::where('post_id', $post->id)->delete();
+        }
+
+        // upload a image
+        foreach($request->images as $file) {
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $dir = public_path('upload/images');
+            $file->move($dir, $filename);
+
+            PostImage::create([
+                'post_id' => $post->id,
+                'path' => '/upload/images/' . $filename,
+            ]);
+        }
+
+        // update post
         $post->update([
             'title' => $request->title,
-            'body'  => $request->body,
-            'image' => $image
+            'body' => $request->body,
         ]);
 
         $post->categories()->sync($request->category_ids);
