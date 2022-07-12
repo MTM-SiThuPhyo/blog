@@ -22,7 +22,7 @@
             @foreach ($posts as $post)
             <div class="card mb-3">
                 @if($post->images()->exists())
-                    <img src="{{ $post->images->first()->path }}" class="card-img-top" alt="...">
+                    <img src="{{ Storage::url($post->images[0]->path) }}" class="card-img-top" alt="...">
                 @endif
                 <div class="card-body">
                     <h5 class="card-title h2">{{ $post->title }}</h5>

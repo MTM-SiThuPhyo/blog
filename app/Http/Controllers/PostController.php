@@ -35,12 +35,12 @@ class PostController extends Controller
         // upload multiple image
         foreach($request->file('images') as $file) {
             $filename = time() . '_' . $file->getClientOriginalName();
-            $dir = public_path('upload/images');
-            $file->move($dir, $filename);
+            $dir = '/upload/images';
+            $path = $file->storeAs($dir, $filename);
 
             PostImage::create([
                 'post_id' => $post->id,
-                'path' => '/upload/images/' . $filename,
+                'path' => $path,
             ]);
         }
 
@@ -65,19 +65,19 @@ class PostController extends Controller
 
         // delete old image
         foreach($post->images as $image) {
-            unlink(public_path($image->path));
+            Storage::delete($image->path);
             PostImage::where('post_id', $post->id)->delete();
         }
 
         // upload a image
         foreach($request->images as $file) {
             $filename = time() . '_' . $file->getClientOriginalName();
-            $dir = public_path('upload/images');
-            $file->move($dir, $filename);
+            $dir = '/upload/images';
+            $path = $file->storeAs($dir, $filename);
 
             PostImage::create([
                 'post_id' => $post->id,
-                'path' => '/upload/images/' . $filename,
+                'path' => $path,
             ]);
         }
 
